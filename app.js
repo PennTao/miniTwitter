@@ -33,13 +33,13 @@ app.use(express.session({
 app.configure(function () {
     app.use(function (req, res, next) {
         res.locals.user = req.session.user;
-        console.log(req.session.user);
+  //      console.log(req.session.user);
         var err = req.flash('error');
         if (err.length)
             res.locals.error = err;
         var succ = req.flash('success');
-        console.log('b4 succ');
-        console.log(succ);
+  //      console.log('b4 succ');
+  //      console.log(succ);
         if (succ.length)
             res.locals.success = succ;
         next();

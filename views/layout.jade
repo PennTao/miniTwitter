@@ -1,0 +1,48 @@
+doctype html
+html
+	head
+		title= title
+		link(rel='stylesheet', href='/stylesheets/bootstrap.css')
+		style(type='txt/css').
+			body{
+				padding-top: 560px;     
+				padding-bottom: 40px;
+			}
+		link(rel='stylesheet', href='stylesheets/bootstrap-responsive.css')
+	body
+		div(class='navbar navbar-fixed-top')
+			div(class='navbar-inner')
+				div(class='container')
+					a(class='btn btn-navbar',data-toggle='collapse',data-target='.nav-collapse')
+						span(class='icon-bar')
+						span(class='icon-bar')
+						span(class='icon-bar')
+					a(class='brand', href='/') miniTwitter
+					div(class='nav-collapse')
+						ul(class='nav')
+							li(class='active')
+								a(href='/') Main Page
+							if !user
+								li
+									a(href='/login') Log In
+								li
+									a(href='/reg') Register
+							else
+								li
+									a(href='/logout') Log out
+		div(id='container', class='container')
+			if success
+				div(class='alert alert-success')
+					p= success
+			if error
+				div(class='alert alert-error')
+					p= error
+			block content
+			hr/
+			footer
+				p
+					a(href='https://www.facebook.com/UPennTao', target= '_blank') Tao Lei
+	script(src='/javascripts/jquery-2.1.0.js')
+	script(src='/javascripts/bootstrap.js')
+	
+					

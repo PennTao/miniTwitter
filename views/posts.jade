@@ -1,0 +1,8 @@
+div(class='row')
+	each post,i in posts
+		if i <= 8
+			div(class='span4')
+				h2
+					a(href='/u/'+post.user)= post.user
+					p 
+						small= post.post

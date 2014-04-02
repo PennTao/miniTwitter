@@ -2,9 +2,11 @@ doctype html
 html
 	head
 		title= title
+		link(href='//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css' rel='stylesheet')
 		link(rel='stylesheet', href='/stylesheets/bootstrap.css')
 		link(rel='stylesheet', href='/stylesheets/style.css')
 		link(rel='stylesheet', href='stylesheets/bootstrap-responsive.css')
+		link(rel='stylesheet', href='stylesheets/bootstrap-social.css')
 	body
 		div(class='navbar navbar-inverse navbar-fixed-top')
 			div(class='navbar-inner')
@@ -36,8 +38,16 @@ html
 			block content
 			hr/
 			footer
-				p created by 
-					a(href='https://www.facebook.com/UPennTao', target= '_blank') Tao Lei
+				p created by  Tao Lei
+				div(class='container')
+					div(class='row')
+						div(class='span2')
+							a(class="btn btn-social-icon btn-facebook",href='https://www.facebook.com/UPennTao')
+								i(class="fa fa-facebook")
+							a(class="btn btn-social-icon btn-linkedin",href='https://www.linkedin.com/pub/tao-lei/41/1b8/984')
+								i(class="fa fa-linkedin")
+							a(class="btn btn-social-icon btn-github",href='https://github.com/PennTao')
+								i(class="fa fa-github")
 	script(src='/javascripts/jquery-2.1.0.js')
 	script(src='/javascripts/bootstrap.js')
 	

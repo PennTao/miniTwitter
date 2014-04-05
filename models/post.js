@@ -1,9 +1,10 @@
 //models/posts.js
 
 var mongodb = require('./db');
-function Post(username, post, time) {
+function Post(username, post, time,id) {
     this.user = username;
     this.post = post;
+    this.id = id;
     if (time) {
         this.time = time;
     } else {
@@ -58,7 +59,8 @@ Post.get = function get(username, callback) {
                 }
                 var posts = [];
                 docs.forEach(function (doc, index) {
-                    var post = new Post(doc.user, doc.post, doc.tie);
+                    var post = new Post(doc.user, doc.post, doc.ti, doc._id);
+                    console.log(doc._id);
                     posts.push(post);
                 });
                 callback(null, posts);

@@ -28,6 +28,10 @@ html
 							else
 								li(class='')
 									a(href='/logout') Log out
+						if user
+							ul(class='nav navbar-nav navbar-right')
+								li
+									a(href='/u/' + user.name)= user.name
 		div(id='container', class='container')
 			if success
 				div(class='alert alert-success')
@@ -37,7 +41,7 @@ html
 					p= error
 			block content
 			hr/
-			footer
+			footer(class='footer')
 				p created by  Tao Lei
 				div(class='container')
 					div(class='row')

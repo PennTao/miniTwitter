@@ -5,6 +5,7 @@
 var crypto = require('crypto');
 var User = require('../models/user.js');
 var Post = require('../models/post.js');
+var Delete = require('../models/delete.js');
 module.exports = function (app) {
     app.get('/', function (req, res) {
         Post.get(null, function (err, posts) {
@@ -125,6 +126,9 @@ module.exports = function (app) {
                 });
             });
         });
+    });
+    app.post('/u/:user/delete', function (req, res) {
+        
     });
 };
 

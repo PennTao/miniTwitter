@@ -5,7 +5,6 @@ div(class='row')
 					a(href='/u/'+post.user)= post.user
 					p 
 						medium()= post.post          
-					if user
+					if user.name == post.user
 						small
 							a(href='#',class= 'deletepost',rel= post.id,user= post.user) delete
-						

@@ -1,9 +1,10 @@
 div(class='row')
 	each post,i in posts
 		if i <= 8
-			div(class='stream-item-header')
+			div(id = 'post',class='stream-item-header')
 				h2
 					a(href='/u/'+post.user)= post.user
 					p 
-						small= post.post
-						small= post.id
+						small()= post.post
+						small(href='#',class= 'deletepost',rel= post.id) delete
+						

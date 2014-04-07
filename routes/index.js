@@ -127,7 +127,10 @@ module.exports = function (app) {
             });
         });
     });
-    app.post('/u/:user/delete', function (req, res) {
+    app.delete('/delete/:id', function (req, res) {
+        Delete.del(req.params.id, function (err, po) {
+            console.log(po);
+        });
         
     });
 };

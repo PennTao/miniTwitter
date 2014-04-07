@@ -4,8 +4,8 @@ div(class='row')
 				h2
 					a(href='/u/'+post.user)= post.user
 					p 
-						small()= post.post
-						if user
-							small
-								a(href='#',class= 'deletepost',rel= post.id,user= post.user) delete
+						medium()= post.post          
+					if user
+						small
+							a(href='#',class= 'deletepost',rel= post.id,user= post.user) delete
 						

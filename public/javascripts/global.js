@@ -1,7 +1,7 @@
 //public/javascripts/global.js
 
 $(document).ready(function(){
-    $('#post h2 p small').on('click', 'a.deletepost', deletePost);
+    $('#post h2 small').on('click', 'a.deletepost', deletePost);
    
 });
 function deletePost(event) {

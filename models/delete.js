@@ -17,7 +17,15 @@ Delete.del = function del(username, postId, callback) {
             console.log('id:' + postId);
             query.user = username;
             query._id = new ObjectID.createFromHexString(postId);
-            collection.find(query).sort({ time: -1 }).toArray(function (err, docs) {
+            collection.remove(query, function (err, res) {
+                mongodb.close();
+                if (err) {
+                    callback(err, null);
+                }
+                callback(null, 'success');
+                
+            });
+           /* collection.find(query).sort({ time: -1 }).toArray(function (err, docs) {
                 mongodb.close();
                 if (err) {
                     callback(err, null);
@@ -28,7 +36,7 @@ Delete.del = function del(username, postId, callback) {
                     posts = 'delete call';
                 });
                 callback(null, posts);
-            });
+            });*/
         });
     });
    

@@ -132,7 +132,8 @@ module.exports = function (app) {
         Delete.del(req.params.user, req.params.id, function (err, po) {
             console.log(po);
             res.send((!err) ? { msg: '' } : { msg: 'error: ' + err });
-          
+            res.redirect(303, '/');
+            
         });      
     });
 };

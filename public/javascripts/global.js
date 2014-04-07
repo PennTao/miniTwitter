@@ -1,29 +1,29 @@
 //public/javascripts/global.js
 
 $(document).ready(function(){
-    $('#post h2 p').on('click', 'small.deletepost', deleteUser);
+    $('#post h2 p small').on('click', 'a.deletepost', deletePost);
    
 });
-function deleteUser(event) {
+function deletePost(event) {
 
     event.preventDefault();
 
     // Pop up a confirmation dialog
-    var confirmation = confirm('Are you sure you want to delete this user?');
+    var confirmation = confirm('Are you sure you want to delete this message?');
 
     // Check and make sure the user confirmed
     if (confirmation === true) {
         // If they did, do our delete
         $.ajax({
             type: 'DELETE',
-            url: '/delete/' + $(this).attr('rel')
-        }).done(function (response) {
+            url: '/u/'+ $(this).attr('user')+'/delete/' + $(this).attr('rel')
+        }).done(function (res) {
 
             // Check for a successful (blank) response
-            if (response.msg === '') {
+            if (res.msg === '') {
             }
             else {
-                alert('Error: ' + response.msg);
+                alert('error: ' + res.msg);
             }
 
         });

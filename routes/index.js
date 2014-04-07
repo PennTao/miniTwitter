@@ -127,11 +127,13 @@ module.exports = function (app) {
             });
         });
     });
-    app.delete('/delete/:id', function (req, res) {
-        Delete.del(req.params.id, function (err, po) {
+
+    app.delete('/u/:user/delete/:id', function (req, res) {
+        Delete.del(req.params.user, req.params.id, function (err, po) {
             console.log(po);
-        });
-        
+            res.send((!err) ? { msg: '' } : { msg: 'error: ' + err });
+          
+        });      
     });
 };
 

@@ -3,4 +3,6 @@ extends layout
 block content
 	if user
 		include say
-	include posts
+		include loggedinposts
+	else
+		include posts

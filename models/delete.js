@@ -3,7 +3,7 @@ var mongodb = require('./db');
 var ObjectID = require('mongodb').ObjectID;
 function Delete() { };
 module.exports = Delete;
-Delete.del = function del(postId, callback) {
+Delete.del = function del(username, postId, callback) {
     mongodb.open(function (err, db) {
         if (err) {
             return callback(err);
@@ -15,6 +15,7 @@ Delete.del = function del(postId, callback) {
             }
             var query = {};
             console.log('id:' + postId);
+            query.user = username;
             query._id = new ObjectID.createFromHexString(postId);
             collection.find(query).sort({ time: -1 }).toArray(function (err, docs) {
                 mongodb.close();

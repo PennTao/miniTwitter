@@ -1,7 +1,7 @@
 //public/javascripts/global.js
 
 $(document).ready(function(){
-    $('#post h2 small').on('click', 'a.deletepost', deletePost);
+    $('#post h2 blockquote').on('click', 'a.deletepost', deletePost);
    
 });
 function deletePost(event) {
@@ -19,8 +19,9 @@ function deletePost(event) {
             url: '/u/'+ $(this).attr('user')+'/delete/' + $(this).attr('rel')
         }).done(function (res) {
 
-            // Check for a successful (blank) response
-            if (res.msg === '') {
+            // Check for a successful response and redirect to user's page
+            if (res.redirectTo && res.msg == 'success') {
+                window.location = res.redirectTo;
             }
             else {
                 alert('error: ' + res.msg);

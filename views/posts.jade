@@ -3,8 +3,8 @@ div(class='row')
 		if i <= 8
 			div(id = 'post',class='stream-item-header')
 				h2
-					a(href='/u/'+post.user)= post.user
-					p 
-						medium()= post.post
+					blockquote
+						a(href='/u/'+post.user)= post.user
+						p= post.post
 						
 						

@@ -131,8 +131,11 @@ module.exports = function (app) {
     app.delete('/u/:user/delete/:id', function (req, res) {
         Delete.del(req.params.user, req.params.id, function (err, po) {
             console.log(po);
-            res.send((!err) ? { msg: '' } : { msg: 'error: ' + err });
-            res.redirect(303, '/');
+            data = {
+                msg: 'success',
+                redirectTo: '/u/' + req.params.user
+            }
+            res.send((!err) ? data : { msg: 'error: ' + err });
             
         });      
     });

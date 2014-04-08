@@ -2,9 +2,9 @@ div(class='row')
 	each post,i in posts
 			div(id = 'post',class='stream-item-header')
 				h2
-					a(href='/u/'+post.user)= post.user
-					p 
-						medium()= post.post          
-					if user.name == post.user
-						small
-							a(href='#',class= 'deletepost',rel= post.id,user= post.user) delete
+					blockquote
+						a(href='/u/'+post.user)= post.user
+						p= post.post          
+						if user.name == post.user
+							small
+								a(href='#',class= 'deletepost',rel= post.id,user= post.user) delete

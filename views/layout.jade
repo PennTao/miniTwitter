@@ -6,30 +6,31 @@ html
 		link(rel='stylesheet', href='/stylesheets/bootstrap.css')
 		link(rel='stylesheet', href='/stylesheets/style.css')
 	body
-		div(class='navbar navbar-inverse navbar-fixed-top')
-			div(class='navbar-inner')
-				div(class='container')
-					button(type='button',class='btn btn-navbar',data-toggle='collapse',data-target='.nav-collapse')
+		div(class='navbar navbar-fixed-top navbar-inverse',role='navigation')
+			div(class='container')
+				div(class='navbar-header')
+					button(type='button',class='navbar-toggle',data-toggle='collapse',data-target='.nav-collapse')
+						span(class='sr-only') Toggle navigation
 						span(class='icon-bar')
 						span(class='icon-bar')
 						span(class='icon-bar')
-					a(class='brand', href='/') miniTwitter
-					div(class='nav-collapse collapse')
-						ul(class='nav')
+					a(class='navbar-brand', href='/') miniTwitter
+				div(class='collapse navbar-collapse')
+					ul(class='nav navbar-nav')
+						li(class='')
+							a(href='/') Main Page
+						if !user
 							li(class='')
-								a(href='/') Main Page
-							if !user
-								li(class='')
-									a(href='/login') Log In
-								li(class='')
-									a(href='/reg') Register
-							else
-								li(class='')
-									a(href='/logout') Log out
-						if user
-							ul(class='nav navbar-nav navbar-right')
-								li
-									a(href='/u/' + user.name)= user.name
+								a(href='/login') Log In
+							li(class='')
+								a(href='/reg') Register
+						else
+							li(class='')
+								a(href='/logout') Log out
+					if user
+						ul(class='nav navbar-nav navbar-right')
+							li
+								a(href='/u/' + user.name)= user.name
 		div(id='container', class='container')
 			if success
 				div(class='alert alert-success')

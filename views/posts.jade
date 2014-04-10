@@ -2,9 +2,9 @@ div(class='row')
 	each post,i in posts
 		if i <= 8
 			div(id = 'post',class='stream-item-header')
-				h2
 					blockquote
-						a(href='/u/'+post.user)= post.user
+						h3
+							a(href='/u/'+post.user)= post.user
 						p= post.post
 						
 						

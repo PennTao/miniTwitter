@@ -1,3 +1,5 @@
-form(method='post',action='/post',class='well form-inline center',style='text-aligh:center;')
-	input(type='text', class='span8',name='post',maxlength='140')
+form(method='post',action='/post',class='form',role='form')
+	div(class='form-group')
+		div(class='col-xs-8')
+			input(type='text', class='form-control',name='post',maxlength='140')
 	button(type='submit', class='btn btn-success') Post

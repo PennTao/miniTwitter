@@ -2,12 +2,25 @@ extends layout
 
 block content
 	if !user
-		div(class='hero-unit')
+		div(class='jumbotron')
 			h1 Welcom to miniTwitter
 			p miniTwitter is a Node.js based micro blog system
 			p
 				a(class='btn btn-primary btn-large', href='/login') Log in
 				a(class='btn btn-large', href='/reg') Register
 	else
-		include say
-	include posts
+		div(class= 'container-fluid')
+			div(class= 'row')
+				div(class='col-sm-3 col-md-2 sidebar')
+					ul(class= 'nav nav-sidebar')
+						li
+							a(href='#') To be added
+						li
+							a(href='#') To be added
+						li
+							a(href='#') To be added
+						li
+							a(href='#') To be added
+				div(class= 'col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main')
+					include say
+					include posts

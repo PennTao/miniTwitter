@@ -2,6 +2,8 @@ body{
     padding-top: 60px;     			
     padding-bottom: 40px;            
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    height: 100%
+
 }
 a {
 	color: #669;

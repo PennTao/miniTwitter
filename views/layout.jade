@@ -5,6 +5,7 @@ html
 		link(href='//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css' rel='stylesheet')
 		link(rel='stylesheet', href='/stylesheets/bootstrap.css')
 		link(rel='stylesheet', href='/stylesheets/style.css')
+		link(rel='stylesheet', href='/stylesheets/dashboard.css')
 	body
 		div(class='navbar navbar-fixed-top navbar-inverse',role='navigation')
 			div(class='container')
@@ -41,11 +42,11 @@ html
 			
 			block content
 			hr/
-			footer(class='footer')
-				p created by  Tao Lei
+			footer(class='footer')		
 				div(class='container')
 					div(class='row')
-						div(class='span2')
+						div(class='col-md-2 col-md-offset-5')
+							p created by  Tao Lei
 							a(class="btn btn-social-icon btn-facebook",href='https://www.facebook.com/UPennTao',target= '_blank')
 								i(class="fa fa-facebook")
 							a(class="btn btn-social-icon btn-linkedin",href='https://www.linkedin.com/pub/tao-lei/41/1b8/984',target= '_blank')

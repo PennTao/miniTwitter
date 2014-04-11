@@ -8,16 +8,19 @@ block content
 						li
 							div(class= 'well well-sm')
 								div(class='media')
-									a(class= 'thumbnail pull-left', href='#')
-										img(class= 'media-object', src='http://en.opensuse.org/images/0/0b/Icon-user.png',height='200',width='200')
+									div(class='col-sm-offset-1 col-md-10')
+										a(class= 'thumbnail pull-left', href='#')
+											img(class= 'media-object', src='http://en.opensuse.org/images/0/0b/Icon-user.png')
 								div(class='media body')
-									h2(class='media-heading')= title
-									a(href='#') 
-										<span class="label label-success">10 Followes</span>
-									a(href='#') 
-										<span class="label label-info">10 Followings</span>
-									a(href='#') 
-										<span class="label label-warning">10 Tweets</span>
+									div(class='col-sm-offset-3 col-md-10')
+										h2(class='media-heading')= title
+									div(class='col-sm-offset-1 col-md-10')
+										a(href='#') 
+											<span class="label label-success">10 Followes</span>
+										a(href='#') 
+											<span class="label label-info">10 Followings</span>
+										a(href='#') 
+											<span class="label label-warning">10 Tweets</span>
 						li
 							a(href='#') To be added
 						li

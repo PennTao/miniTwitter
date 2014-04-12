@@ -6,6 +6,7 @@ var crypto = require('crypto');
 var User = require('../models/user.js');
 var Post = require('../models/post.js');
 var Delete = require('../models/delete.js');
+var postPerpage = 5;
 module.exports = function (app) {
     app.get('/', function (req, res) {
         Post.get(null, function (err, posts) {
@@ -127,7 +128,24 @@ module.exports = function (app) {
             });
         });
     });
-
+    app.get('/u/:user/:page', function (req, res) {
+        User.get(req.params.user, function (err, user) {
+            if (!user) {
+                req.flash('error', 'user does not exist');
+                return res.redirect('/');
+            }
+            Post.getPage(user.name, req.params.page, postPerpage, function (err, posts) {
+                if (err) {
+                    req.flash('error', err);
+                    return res.redirect('/');
+                }
+                res.render('user', {
+                    title: user.name,
+                    posts: posts,
+                });
+            })
+        });
+    });
     app.delete('/u/:user/delete/:id', function (req, res) {
         Delete.del(req.params.user, req.params.id, function (err, po) {
             console.log(po);

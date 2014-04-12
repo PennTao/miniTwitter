@@ -4580,7 +4580,7 @@ a.thumbnail.active {
 }
 .media,
 .media .media {
-  margin-top: 15px;
+  margin-top: 0;
 }
 .media:first-child {
   margin-top: 0;

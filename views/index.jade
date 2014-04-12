@@ -4,7 +4,8 @@ block content
 	if !user
 		div(class='jumbotron')
 			h1 Welcom to miniTwitter
-			p miniTwitter is a Node.js based micro blog system
+			p miniTwitter is built by NodeJS, mongoDB and deployed on AWS EC2 instance.
+			p This website will be updated frequently since I'm keeping adding features to it and changing UI.
 			p
 				a(class='btn btn-primary btn-large', href='/login') Log in
 				a(class='btn btn-large', href='/reg') Register
@@ -21,7 +22,7 @@ block content
 											img(class= 'media-object', src='http://en.opensuse.org/images/0/0b/Icon-user.png')
 								div(class='media body')
 									div(class='col-sm-offset-3 col-md-10')
-										h2(class='media-heading')= title
+										h2(class='media-heading')= user.name
 									div(class='col-sm-offset-1 col-md-10')
 										a(href='#') 
 											<span class="label label-success">10 Followes</span>

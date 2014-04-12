@@ -52,7 +52,7 @@ Post.get = function get(username, callback) {
             if (username) {
                 query.user = username;
             }
-            collection.find(query).sort({ time: -1 }).toArray(function (err, docs) {
+            collection.find(query).sort({ time: -1 }).limit(5).toArray(function (err, docs) {
                 mongodb.close();
                 if (err) {
                     callback(err, null);
@@ -65,5 +65,35 @@ Post.get = function get(username, callback) {
                 callback(null, posts);
             });
         });
+    });
+};
+
+Post.getPage = function getPage(username, curPage, postPerPage, callback) {
+    mongodb.open(function (err, db) {
+        if (err) {
+            return callback(err)
+        }
+        db.collection('posts', function (err, collection) {
+            if (err) {
+                mongodb.close();
+                return callback(err);
+            }
+            var query = {};
+            if (username) {
+                query.user = username;
+            }
+            collection.find(query).sort({ time: -1 }).skip((curPage-1)*postPerPage).limit(postPerPage).toArray(function (err, docs) {
+                mongodb.close();
+                if (err) {
+                    callback(err, null);
+                }
+                var posts = [];
+                docs.forEach(function (doc, index) {
+                    var post = new Post(doc.user, doc.post, doc.ti, doc._id);
+                    posts.push(post);
+                });
+                callback(null, posts);
+            });
+        })
     });
 };

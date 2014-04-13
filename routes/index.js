@@ -6,6 +6,7 @@ var crypto = require('crypto');
 var User = require('../models/user.js');
 var Post = require('../models/post.js');
 var Delete = require('../models/delete.js');
+var pagination = require('pagination');
 var postPerpage = 5;
 module.exports = function (app) {
     app.get('/', function (req, res) {
@@ -128,20 +129,23 @@ module.exports = function (app) {
             });
         });
     });
-    app.get('/u/:user/:page', function (req, res) {
+    app.get('/u/:user/page/:page', function (req, res) {
         User.get(req.params.user, function (err, user) {
             if (!user) {
                 req.flash('error', 'user does not exist');
                 return res.redirect('/');
             }
-            Post.getPage(user.name, req.params.page, postPerpage, function (err, posts) {
+            Post.getPage(user.name, req.params.page, postPerpage, function (err, posts,postCount) {
                 if (err) {
                     req.flash('error', err);
                     return res.redirect('/');
                 }
+                var paginator = new pagination.SearchPaginator({ prelink: '/u/' + req.params.user, slashSeparator: true, current: req.params.page, rowsPerPage: postPerpage, totalResult: 199 });
+                console.log(paginator.render().toString());
                 res.render('user', {
                     title: user.name,
                     posts: posts,
+                    pagination: paginator.render().toString()
                 });
             })
         });

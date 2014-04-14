@@ -10,28 +10,27 @@ html
 		div(class='navbar navbar-fixed-top navbar-inverse',role='navigation')
 			div(class='container')
 				div(class='navbar-header')
-					button(type='button',class='navbar-toggle',data-toggle='collapse',data-target='.nav-collapse')
+					button(type='button',class='navbar-toggle',data-toggle='collapse',data-target='.navbar-collapse')
 						span(class='sr-only') Toggle navigation
 						span(class='icon-bar')
 						span(class='icon-bar')
 						span(class='icon-bar')
 					a(class='navbar-brand', href='/') miniTwitter
-				div(class='collapse navbar-collapse')
+				div(class='navbar-collapse collapse')
 					ul(class='nav navbar-nav')
-						li(class='')
+						li
 							a(href='/') Main Page
 						if !user
-							li(class='')
+							li
 								a(href='/login') Log In
 							li(class='')
 								a(href='/reg') Register
 						else
-							li(class='')
-								a(href='/logout') Log out
-					if user
-						ul(class='nav navbar-nav navbar-right')
 							li
-								a(href='/u/' + user.name)= user.name
+								a(href='/logout') Log out
+						if user
+								li
+									a(href='/u/' + user.name + '/page/1')= user.name
 		div(id='container', class='container')
 			if success
 				div(class='alert alert-success')

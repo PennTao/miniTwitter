@@ -155,6 +155,7 @@ module.exports = function (app) {
                     res.render('user', {
                         title: req.params.user,
                         posts: posts,
+                        postCount: totalPosts,
                         pageCount: Math.ceil(totalPosts / postPerpage),
                         curPage: req.params.page
                     });
@@ -185,7 +186,14 @@ function checkLogin(req, res, next) {
 function checkNLogin(req, res, next) {
     if (req.session.user) {
         req.flash('error', 'logged in already');
-        return res.redirect('/');
+        return res.redirect('/u/' + req.session.user.name + '/page/1');
+    }
+    next();
+};
+
+function checkInitLogin(req, res, next) {
+    if (req.session.user) {
+        return res.redirect('/u/' + req.session.user.name + '/page/1');
     }
     next();
 };

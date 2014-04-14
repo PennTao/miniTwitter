@@ -6,7 +6,6 @@ var crypto = require('crypto');
 var User = require('../models/user.js');
 var Post = require('../models/post.js');
 var Delete = require('../models/delete.js');
-var pagination = require('pagination');
 var postPerpage = 5;
 module.exports = function (app) {
     app.get('/', function (req, res) {
@@ -127,13 +126,10 @@ module.exports = function (app) {
                     if (err) {
                         req.flash('error', err);
                         return res.redirect('/');
-                    }
-                    var paginator = new pagination.SearchPaginator({ prelink: '/u/' + req.params.user, slashSeparator: true, current: 1, rowsPerPage: postPerpage, totalResult: totalPosts });
-                    console.log(Math.ceil(totalPosts / postPerpage));
+                    }     
                     res.render('user', {
                         title: user.name,
                         posts: posts,
-                        pagination: paginator.render().toString(),
                         pageCount: Math.ceil(totalPosts / postPerpage)
                     });
                 });
@@ -156,12 +152,9 @@ module.exports = function (app) {
                         req.flash('error', err);
                         return res.redirect('/');
                     }
-                    var paginator = new pagination.SearchPaginator({ prelink: '/u/' + req.params.user, slashSeparator: true, current: req.params.page, rowsPerPage: postPerpage, totalResult: totalPosts });
-                    console.log(Math.ceil(totalPosts / postPerpage));
                     res.render('user', {
                         title: req.params.user,
                         posts: posts,
-                        pagination: paginator.render().toString(),
                         pageCount: Math.ceil(totalPosts / postPerpage),
                         curPage: req.params.page
                     });

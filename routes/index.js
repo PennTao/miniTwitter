@@ -106,7 +106,7 @@ module.exports = function (app) {
                 return res.redirect('/');
             }
             req.flash('success', 'post success');
-            res.redirect('/u/' + currentUser.name + '/page1');
+            res.redirect('/u/' + currentUser.name + '/page/1');
         });
     });
 

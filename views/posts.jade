@@ -1,9 +1,9 @@
 div(class='row')
 	each post,i in posts
 		div(id = 'post',class='stream-item-header')
-				blockquote
-					h3
-						a(href='/u/'+post.user)= post.user
-					p= post.post
+			blockquote
+				h3
+					a(href='/u/'+post.user+'/page/1')= post.user
+				p= post.post
 						
 						

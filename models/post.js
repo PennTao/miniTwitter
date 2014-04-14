@@ -52,7 +52,7 @@ Post.get = function get(username, callback) {
             if (username) {
                 query.user = username;
             }
-            collection.find(query).sort({ time: -1 }).limit(5).toArray(function (err, docs) {
+            collection.find(query).sort({ time: -1 }).limit(15).toArray(function (err, docs) {
                 mongodb.close();
                 if (err) {
                     callback(err, null);
@@ -97,3 +97,28 @@ Post.getPage = function getPage(username, curPage, postPerPage, callback) {
         })
     });
 };
+Post.getCount = function getCount(username, callback) {
+    mongodb.open(function (err, db) {
+        if (err) {
+            return callback(err);
+        }
+        db.collection('posts', function (err, collection) {
+            if (err) {
+                mongodb.close();
+                return callback(err);
+            }
+            var query = {};
+            if (username) {
+                query.user = username;
+            }
+            collection.find(query).count(function (err, numDocs) {
+                mongodb.close();
+                if (err) {
+                    callback(err, null);
+                }
+                callback(null, numDocs);
+            });
+        });
+    });
+
+}

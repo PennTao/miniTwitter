@@ -11,7 +11,7 @@ block content
 									div(class='col-sm-offset-1 col-md-10')
 										a(class= 'thumbnail pull-left', href='#')
 											img(class= 'media-object', src='http://en.opensuse.org/images/0/0b/Icon-user.png')
-								div(class='media-body')
+								div(class='media body')
 									div(class='col-sm-offset-3 col-md-10')
 										h2(class='media-heading')= title
 									div(class='col-sm-offset-1 col-md-10')
@@ -35,4 +35,29 @@ block content
 						include loggedinposts
 					else
 						include posts
-				div!= pagination
+					
+					div(class='col-sm-offset-8 col-md-offset-3')
+						ul(class='pagination')
+							- if(curPage>1){
+									li
+										a(href='/u/'+ title + '/page/' + (curPage-1)) &laquo;
+							- }
+							li
+								a(href='/u/'+ title + '/page/1') First
+							- for (var i=1;i<=pageCount;i++){
+							-	if(Math.abs(i-curPage)<=2){		
+							-		if(i == curPage){		
+										li(class='active')
+											a(href='/u/'+ title + '/page/'+i)= i
+							-		}else{
+										li
+											a(href='/u/'+ title + '/page/'+i)= i							
+							-		}
+							-	}
+							-}
+							li
+								a(href='/u/'+ title + '/page/' + pageCount) Last
+							- if(curPage<pageCount){
+									li
+										a(href='/u/'+ title + '/page/' + (parseInt(curPage) + 1)) &raquo;
+							- }

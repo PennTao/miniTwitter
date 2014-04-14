@@ -1,10 +1,10 @@
 div(class='row')
 	each post,i in posts
-			div(id = 'post',class='stream-item-header')
-				h2
-					blockquote
-						a(href='/u/'+post.user)= post.user
-						p= post.post          
-						if user.name == post.user
-							small
-								a(href='#',class= 'deletepost',rel= post.id,user= post.user) delete
+		div(id = 'post',class='stream-item-header')
+			blockquote
+				h3
+					a(href='/u/'+post.user+'/page/1')= post.user
+				p= post.post          
+				if user.name == post.user
+					small
+						a(href='#',class= 'deletepost',rel= post.id,user= post.user) delete

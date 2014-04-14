@@ -107,7 +107,7 @@ module.exports = function (app) {
                 return res.redirect('/');
             }
             req.flash('success', 'post success');
-            res.redirect('/u/' + currentUser.name);
+            res.redirect('/u/' + currentUser.name + '/page1');
         });
     });
 
@@ -122,9 +122,20 @@ module.exports = function (app) {
                     req.flash('error', err);
                     return res.redirect('/');
                 }
-                res.render('user', {
-                    title: user.name,
-                    posts: posts,
+
+                Post.getCount(req.params.user, function (err, totalPosts) {
+                    if (err) {
+                        req.flash('error', err);
+                        return res.redirect('/');
+                    }
+                    var paginator = new pagination.SearchPaginator({ prelink: '/u/' + req.params.user, slashSeparator: true, current: 1, rowsPerPage: postPerpage, totalResult: totalPosts });
+                    console.log(Math.ceil(totalPosts / postPerpage));
+                    res.render('user', {
+                        title: user.name,
+                        posts: posts,
+                        pagination: paginator.render().toString(),
+                        pageCount: Math.ceil(totalPosts / postPerpage)
+                    });
                 });
             });
         });
@@ -135,17 +146,25 @@ module.exports = function (app) {
                 req.flash('error', 'user does not exist');
                 return res.redirect('/');
             }
-            Post.getPage(user.name, req.params.page, postPerpage, function (err, posts,postCount) {
+            Post.getPage(req.params.user, req.params.page, postPerpage, function (err, posts) {
                 if (err) {
                     req.flash('error', err);
                     return res.redirect('/');
                 }
-                var paginator = new pagination.SearchPaginator({ prelink: '/u/' + req.params.user, slashSeparator: true, current: req.params.page, rowsPerPage: postPerpage, totalResult: 199 });
-                console.log(paginator.render().toString());
-                res.render('user', {
-                    title: user.name,
-                    posts: posts,
-                    pagination: paginator.render().toString()
+                Post.getCount(req.params.user, function (err, totalPosts) {
+                    if (err) {
+                        req.flash('error', err);
+                        return res.redirect('/');
+                    }
+                    var paginator = new pagination.SearchPaginator({ prelink: '/u/' + req.params.user, slashSeparator: true, current: req.params.page, rowsPerPage: postPerpage, totalResult: totalPosts });
+                    console.log(Math.ceil(totalPosts / postPerpage));
+                    res.render('user', {
+                        title: req.params.user,
+                        posts: posts,
+                        pagination: paginator.render().toString(),
+                        pageCount: Math.ceil(totalPosts / postPerpage),
+                        curPage: req.params.page
+                    });
                 });
             })
         });
@@ -155,7 +174,7 @@ module.exports = function (app) {
             console.log(po);
             data = {
                 msg: 'success',
-                redirectTo: '/u/' + req.params.user
+                redirectTo: '/u/' + req.params.user + '/page/1'
             }
             res.send((!err) ? data : { msg: 'error: ' + err });
             

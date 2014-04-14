@@ -1,7 +1,7 @@
 //public/javascripts/global.js
 
 $(document).ready(function(){
-    $('#post h2 blockquote').on('click', 'a.deletepost', deletePost);
+    $('#post blockquote small').on('click', 'a.deletepost', deletePost);
    
 });
 function deletePost(event) {
@@ -14,9 +14,11 @@ function deletePost(event) {
     // Check and make sure the user confirmed
     if (confirmation === true) {
         // If they did, do our delete
+        console.log($(this).attr('rel'));
         $.ajax({
             type: 'DELETE',
-            url: '/u/'+ $(this).attr('user')+'/delete/' + $(this).attr('rel')
+            url: '/u/' + $(this).attr('user') + '/delete/' + $(this).attr('rel')
+
         }).done(function (res) {
 
             // Check for a successful response and redirect to user's page

@@ -1,10 +1,13 @@
 div(class='row')
 	each post,i in posts
-		div(id = 'post',class='stream-item-header')
-			blockquote
-				h3
-					a(href='/u/'+post.user+'/page/1')= post.user
-				p= post.post          
+		blockquote
+			div(id = 'post',class='media')
+				a(class='pull-left',href='#')
+					img(class= 'media-object', src='http://en.opensuse.org/images/0/0b/Icon-user.png',style='width:64px;height:64px')
+				div(class='media-body')
+					h4(class='media-heading')
+						a(href='/u/'+post.user+'/page/1')= post.user
+					p= post.post   
 				if user.name == post.user
 					small
 						a(href='#',class= 'deletepost',rel= post.id,user= post.user) delete

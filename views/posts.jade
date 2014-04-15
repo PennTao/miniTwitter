@@ -1,9 +1,13 @@
 div(class='row')
 	each post,i in posts
-		div(id = 'post',class='stream-item-header')
+		div(class='col-6 col-sm-6 col-lg-4')
 			blockquote
-				h3
-					a(href='/u/'+post.user+'/page/1')= post.user
-				p= post.post
-						
+				div(class='media')
+					a(class='pull-left',href='#')
+						img(class= 'media-object', src='http://en.opensuse.org/images/0/0b/Icon-user.png',style='width:64px;height:64px')
+					div(class='media-body')
+						h4(class='media-heading')
+							a(href='/u/'+post.user+'/page/1')= post.user
+						p= post.post
+				
 						

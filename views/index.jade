@@ -12,26 +12,6 @@ block content
 	else
 		div(class= 'container-fluid')
 			div(class= 'row')
-				div(class='col-sm-3 col-md-2 sidebar')
-					div(class='nav-sidebar')
-							div(class= 'well well-sm')
-								div(class='media')
-									div(class='col-sm-offset-1 col-md-10')
-										a(class= 'thumbnail pull-left', href='#')
-											img(class= 'media-object', src='http://en.opensuse.org/images/0/0b/Icon-user.png')
-								div(class='media body')
-									div(class='col-sm-offset-2')
-										h2(class='media-heading')= user.name
-					ul(class= 'nav nav-pills nav-sidebar')
-						li
-							label(class='label label-success') Followes
-							a(href='#') 10 
-						li
-							span(class='label label-primary') Followings
-							a(href='#') 10 
-						li
-							span(class='label label-danger') Tweets
-							a(href='#') #{postCount}
-				div(class= 'col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main')
+				div(class= 'col-sm-9 col-sm-offset-1 col-md-10 col-md-offset-1')
 					include say
 					include posts

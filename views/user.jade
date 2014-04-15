@@ -8,11 +8,9 @@ block content
 							div(class= 'well well-sm')
 								div(class='media')
 									div(class='col-sm-offset-1 col-md-10')
-										a(class= 'thumbnail pull-left', href='#')
+										a(class= 'thumbnail', href='#')
 											img(class= 'media-object', src='http://en.opensuse.org/images/0/0b/Icon-user.png')
-								div(class='media body')
-									div(class='col-sm-offset-2')
-										h2(class='media-heading') #{title}
+										h2(class='media-heading') #{title}											
 					ul(class= 'nav nav-pills nav-sidebar')
 						li
 							span(class='label label-success') Followes
@@ -23,6 +21,7 @@ block content
 						li
 							span(class='label label-danger') Tweets
 							a(href='#') #{postCount}
+
 				div(class= 'col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main')
 					if user
 						include say

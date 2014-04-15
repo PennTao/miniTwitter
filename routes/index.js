@@ -110,6 +110,28 @@ module.exports = function (app) {
         });
     });
 
+    app.post('/u/:user/follow', checkLogin);
+    app.post('/u/:user/follow', function (req, res) {
+        User.follow(req.session.user.name, req.params.user, function (err) {
+            if (err) {
+                req.flash('error', err);             
+            }
+            return res.redirect('/u/' + req.session.user.name + '/page/1')
+        })
+
+    });
+
+    app.post('/u/:user/unfollow', checkLogin);
+    app.post('/u/:user/unfollow', function (req, res) {
+        User.unfollow(req.session.user.name, req.params.user, function (err) {
+            if (err) {
+                req.flash('error', err);
+            }
+            return res.redirect('/u/' + req.session.user.name + '/page/1')
+        })
+
+    });
+
     app.get('/u/:user', function (req, res) {
         User.get(req.params.user, function (err, user) {
             if (!user) {

@@ -21,6 +21,12 @@ block content
 						li
 							span(class='label label-danger') Tweets
 							a(href='#') #{postCount}
+					form(method='post',action='/u/'+title+'/follow',role='form')
+						button(type='submit', class='btn btn-success') follow
+					form(method='post',action='/u/'+title+'/unfollow',role='form')
+						button(type='submit', class='btn btn-success') unfollow
+
+	
 
 				div(class= 'col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main')
 					if user

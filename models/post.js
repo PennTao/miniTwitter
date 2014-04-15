@@ -52,7 +52,7 @@ Post.get = function get(username, callback) {
             if (username) {
                 query.user = username;
             }
-            collection.find(query).sort({ time: -1 }).limit(15).toArray(function (err, docs) {
+            collection.find(query).sort({ time: -1 }).limit(45).toArray(function (err, docs) {
                 mongodb.close();
                 if (err) {
                     callback(err, null);

@@ -14,15 +14,17 @@ block content
 					ul(class= 'nav nav-pills nav-sidebar')
 						li
 							span(class='label label-success') Followes
-							a(href='#') 10 
+							a(href='#')= follower 
 						li
 							span(class='label label-primary') Followings
-							a(href='#') 10 
+							a(href='#')= following
 						li
 							span(class='label label-danger') Tweets
 							a(href='#') #{postCount}
-					a(href='#',class= 'follow',user= user.name) follow
-					a(href='#',class= 'unfollow',user= user.name) delete
+					form(method='post',action='/u/' + title + '/follow',class='form',role='form')
+						button(type='submit', class='btn btn-success') Follow
+					form(method='post',action='/u/' + title + '/unfollow',class='form',role='form')
+						button(type='submit', class='btn btn-success') Unfollow
 
 	
 

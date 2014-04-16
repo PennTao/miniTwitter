@@ -114,9 +114,9 @@ module.exports = function (app) {
     app.post('/u/:user/follow', function (req, res) {
         User.follow(req.session.user.name, req.params.user, function (err) {
             if (err) {
-                req.flash('error', err);             
+                req.flash('error', err);
             }
-            return res.redirect('/u/' + req.session.user.name + '/page/1')
+            return res.redirect('/u/' + req.params.user + '/page/1')
         })
 
     });
@@ -127,11 +127,11 @@ module.exports = function (app) {
             if (err) {
                 req.flash('error', err);
             }
-            return res.redirect('/u/' + req.session.user.name + '/page/1')
+            return res.redirect('/u/' + req.params.user + '/page/1')
         })
 
     });
-
+    // app.get('/u/:user',callback) to be removed
     app.get('/u/:user', function (req, res) {
         User.get(req.params.user, function (err, user) {
             if (!user) {
@@ -158,6 +158,7 @@ module.exports = function (app) {
             });
         });
     });
+
     app.get('/u/:user/page/:page', function (req, res) {
         User.get(req.params.user, function (err, user) {
             if (!user) {
@@ -174,13 +175,23 @@ module.exports = function (app) {
                         req.flash('error', err);
                         return res.redirect('/');
                     }
-                    res.render('user', {
-                        title: req.params.user,
-                        posts: posts,
-                        postCount: totalPosts,
-                        pageCount: Math.ceil(totalPosts / postPerpage),
-                        curPage: req.params.page
+                    User.getFolloweInfo(req.params.user, function (err, followerCount, followingCount) {
+                        if (err) {
+                            req.flash('error', err);
+                            return res.redirect('/');
+                        }
+                        console.log('follower');
+                        console.log(followerCount);
+                        res.render('user', {
+                            title: req.params.user,
+                            posts: posts,
+                            postCount: totalPosts,
+                            pageCount: Math.ceil(totalPosts / postPerpage),
+                            follower: followerCount,
+                            following: followingCount,
+                        });
                     });
+                    
                 });
             })
         });
@@ -196,6 +207,7 @@ module.exports = function (app) {
             
         });      
     });
+
 };
 
 function checkLogin(req, res, next) {

@@ -47,10 +47,11 @@ function follow(event) {
     if (confirmation === true) {
         $.ajax({
             type: 'POST',
+            data: '',
             url: '/u/' + $(this).attr('user') + '/follow'
         }).done(function (res) {
             if (res.redirectTo && res.msg == 'success') {
-               
+                window.location = res.redirectTo;
             }
             else {
                 alert('error: ' + res.msg);

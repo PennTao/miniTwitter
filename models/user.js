@@ -66,16 +66,16 @@ User.follow = function addFollower(username, follower, callback) {
                 mongodb.close();
                 return callback(err);
             }
-            collection.update({ name: follower }, { $push: { followers: username } }, function (err, count) {
+            collection.update({ name: follower }, { $addToSet: { followers: username } }, function (err, count) {
                 if (err) {
                      mongodb.close();
                      callback(err);
                 } else {
-                    collection.update({ name: username }, { $push: { following: follower } }, function (err, count) {
+                    collection.update({ name: username }, { $addToSet: { following: follower } }, function (err, count) {
                         mongodb.close();
-                        if (err) {
-                            callback(err);
-                        }
+
+                        callback(err);
+                        
                     });
                 }
             });
@@ -93,16 +93,15 @@ User.unfollow = function unfollow(username, unfollower, callback) {
                 mongodb.close();
                 return callback(err);
             }
-            collection.update({ name: follower }, { $pull: { followers: username } }, function (err, count) {
-                mongodb.close();
+            collection.update({ name: unfollower }, { $pull: { followers: username } }, function (err, count) {
                 if (err) {
                     callback(err);
                 } else {
-                    collection.update({ name: username }, { $pull: { following: follower } }, function (err, count) {
+                    collection.update({ name: username }, { $pull: { following: unfollower } }, function (err, count) {
                         mongodb.close();
-                        if (err) {
-                            callback(err);
-                        }
+
+                        callback(err);
+
                     })
                 }
             });
@@ -124,12 +123,24 @@ User.getFolloweInfo = function getFollowerCount(username, callback) {
             if (username) {
                 query.name = username;
             }
-            collection.findOne({ name: username }, function (err, doc) {
+            collection.findOne(query, function (err, doc) {
+                console.log(doc);
                 mongodb.close();
+
                 if (err) {
-                    callback(err, doc.follower,doc.following);
+                    callback(err, null, null);
                 }
-               
+                if (doc.followers == undefined && doc.following == undefined) {
+                    callback(null, 0, 0);
+                } else if (doc.followers == undefined) {
+                    callback(null, 0, doc.following.length);
+                } else if (doc.following == undefined) {
+                    callback(null, doc.followers.length, 0);
+                } else {
+                    callback(null, doc.followers.length, doc.following.length);
+
+                }
+                
             });
 
         })

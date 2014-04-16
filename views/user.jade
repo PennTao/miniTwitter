@@ -3,7 +3,7 @@ extends layout
 block content
 	div(class= 'container-fluid')
 			div(class= 'row')
-				div(class='col-sm-3 col-md-2 sidebar')
+				div(class='col-sm-3 col-md-2 sidebar',id='follow')
 					div(class='nav-sidebar')
 							div(class= 'well well-sm')
 								div(class='media')
@@ -21,10 +21,8 @@ block content
 						li
 							span(class='label label-danger') Tweets
 							a(href='#') #{postCount}
-					form(method='post',action='/u/'+title+'/follow',role='form')
-						button(type='submit', class='btn btn-success') follow
-					form(method='post',action='/u/'+title+'/unfollow',role='form')
-						button(type='submit', class='btn btn-success') unfollow
+					a(href='#',class= 'follow',user= user.name) follow
+					a(href='#',class= 'unfollow',user= user.name) delete
 
 	
 

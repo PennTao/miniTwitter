@@ -67,8 +67,8 @@ User.follow = function addFollower(username, follower, callback) {
                 return callback(err);
             }
             collection.update({ name: follower }, { $push: { followers: username } }, function (err, count) {
-                mongodb.close();
                 if (err) {
+                     mongodb.close();
                      callback(err);
                 } else {
                     collection.update({ name: username }, { $push: { following: follower } }, function (err, count) {

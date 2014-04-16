@@ -2,7 +2,8 @@
 
 $(document).ready(function(){
     $('#post blockquote small').on('click', 'a.deletepost', deletePost);
-   
+    $('#follow').on('click', 'a.follow', follow);
+    $('#follow').on('click', 'a.unfollow', unfollow);
 });
 function deletePost(event) {
 
@@ -13,8 +14,7 @@ function deletePost(event) {
 
     // Check and make sure the user confirmed
     if (confirmation === true) {
-        // If they did, do our delete
-        console.log($(this).attr('rel'));
+        // If they did, do our delete;
         $.ajax({
             type: 'DELETE',
             url: '/u/' + $(this).attr('user') + '/delete/' + $(this).attr('rel')
@@ -40,3 +40,45 @@ function deletePost(event) {
     }
 
 };
+
+function follow(event) {
+    event.preventDefault();
+    var confirmation = confirm('Are you sure you want to follow this user?');
+    if (confirmation === true) {
+        $.ajax({
+            type: 'POST',
+            url: '/u/' + $(this).attr('user') + '/follow'
+        }).done(function (res) {
+            if (res.redirectTo && res.msg == 'success') {
+               
+            }
+            else {
+                alert('error: ' + res.msg);
+            }
+        });
+    }
+    else {
+        return false;
+    }
+}
+
+function unfollow(event) {
+    event.preventDefault();
+    var confirmation = confirm('Are you sure you want to unfollow this user?');
+    if (confirmation === true) {
+        $.ajax({
+            type: 'POST',
+            url: '/u/' + $(this).attr('user') + '/unfollow'
+        }).done(function (res) {
+            if (res.redirectTo && res.msg == 'success') {
+            
+            }
+            else {
+                alert('error: ' + res.msg);
+            }
+        });
+    }
+    else {
+        return false;
+    }
+}

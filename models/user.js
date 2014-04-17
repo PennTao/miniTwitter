@@ -166,7 +166,7 @@ User.checkFollow = function checkFollow(loggedinUser, checkUser, callback) {
                 if (err) {
                     callback(err, null);
                 }
-                if (checkUser == undefined) {
+                if (doc.following == undefined) {
                     callback(null, -1);
                 } else {
                     callback(null, doc.following.indexOf(checkUser));

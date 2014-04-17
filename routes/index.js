@@ -131,32 +131,95 @@ module.exports = function (app) {
         })
 
     });
-    // app.get('/u/:user',callback) to be removed
-    app.get('/u/:user', function (req, res) {
+
+    app.get('/u/:user/followers', checkLogin);
+    app.get('/u/:user/followers', function (req, res) {
         User.get(req.params.user, function (err, user) {
             if (!user) {
                 req.flash('error', 'user does not exist');
                 return res.redirect('/');
             }
-            Post.get(user.name, function (err, posts) {
+            User.getFollowInfo(req.params.user, function (err, followerlist, followinglist) {
                 if (err) {
                     req.flash('error', err);
                     return res.redirect('/');
                 }
+                console.log(followerlist);
+                res.render('userlist', {
+                    title: req.params.user,
+                    userlist: followerlist,
+                    listname:'Followers',
+                    followerCount: (followerlist == undefined) ? 0 : followerlist.length,
+                    followingCount: (followinglist == undefined) ? 0 : followinglist.length,
+                });
+            });
+        })
+    });
+    app.get('/u/:user/following', checkLogin);
+    app.get('/u/:user/following', function (req, res) {
+        User.get(req.params.user, function (err, user) {
+            if (!user) {
+                req.flash('error', 'user does not exist');
+                return res.redirect('/');
+            }
+            User.getFollowInfo(req.params.user, function (err, followerlist, followinglist) {
+                if (err) {
+                    req.flash('error', err);
+                    return res.redirect('/');
+                }
+                console.log(followinglist);
+                res.render('userlist', {
+                    title: req.params.user,
+                    userlist: followinglist,
+                    listname: 'Following',
+                    followerCount: (followerlist == undefined) ? 0 : followerlist.length,
+                    followingCount: (followinglist == undefined) ? 0 : followinglist.length,
+                });
+            });
+        })
+    });
 
-                Post.getCount(req.params.user, function (err, totalPosts) {
+    app.get('/u/:user/:page', function (req, res) {
+        if (req.params.user == req.session.user.name) {
+            User.get(req.params.user, function (err, user) {
+                if (!user) {
+                    req.flash('error', 'user does not exist');
+                    return res.redirect('/');
+                }
+                User.getFollowInfo(req.params.user, function (err, followerlist, followinglist) {
                     if (err) {
                         req.flash('error', err);
                         return res.redirect('/');
-                    }     
-                    res.render('user', {
-                        title: user.name,
-                        posts: posts,
-                        pageCount: Math.ceil(totalPosts / postPerpage)
+                    }
+                    Post.getCount(followinglist, function (err, totalPosts) {
+                        if (err) {
+                            req.flash('error', err);
+                            return res.redirect('/');
+                        }
+                        Post.getPostPerPage(followinglist, req.params.page, postPerpage, function (err, posts) {
+                            console.log(posts);
+                            if (err) {
+                                req.flash('error', err);
+                                return res.redirect('/');
+                            }
+                            console.log(Math.ceil(totalPosts / postPerpage));
+                            res.render('user', {
+                                title: user.name,
+                                posts: posts,
+                                postCount: totalPosts,
+                                curPage: req.params.page,
+                                pageCount: Math.ceil(totalPosts / postPerpage),
+                                currentUser: 1,
+                                follower: (followerlist == undefined) ? 0 : followerlist.length,
+                                following: (followinglist == undefined) ? 0 : followinglist.length,
+                            });
+                        });
                     });
                 });
             });
-        });
+        }else{
+            res.redirect('/u/' + req.params.user + '/page/1');
+        }
     });
 
     app.get('/u/:user/page/:page', function (req, res) {
@@ -165,7 +228,7 @@ module.exports = function (app) {
                 req.flash('error', 'user does not exist');
                 return res.redirect('/');
             }
-            Post.getPage(req.params.user, req.params.page, postPerpage, function (err, posts) {
+            Post.getPostPerPage(req.params.user, req.params.page, postPerpage, function (err, posts) {
                 if (err) {
                     req.flash('error', err);
                     return res.redirect('/');
@@ -175,21 +238,38 @@ module.exports = function (app) {
                         req.flash('error', err);
                         return res.redirect('/');
                     }
-                    User.getFolloweInfo(req.params.user, function (err, followerCount, followingCount) {
+                    User.getFollowInfo(req.params.user, function (err, followerlist, followinglist) {
                         if (err) {
                             req.flash('error', err);
                             return res.redirect('/');
                         }
-                        console.log('follower');
-                        console.log(followerCount);
-                        res.render('user', {
-                            title: req.params.user,
-                            posts: posts,
-                            postCount: totalPosts,
-                            pageCount: Math.ceil(totalPosts / postPerpage),
-                            follower: followerCount,
-                            following: followingCount,
-                        });
+                        console.log(Math.ceil(totalPosts / postPerpage));
+                        User.checkFollow(req.session.user.name, req.params.user, function (err, index) {
+                            if (req.session.user.name == req.params.user) {
+                                res.render('user', {
+                                    title: req.params.user,
+                                    posts: posts,
+                                    postCount: totalPosts,
+                                    curPage: req.params.page,
+                                    pageCount: Math.ceil(totalPosts / postPerpage),
+                                    follower: (followerlist == undefined)? 0:followerlist.length,
+                                    following: (followinglist == undefined) ? 0 : followinglist.length,
+                                });
+                            } else {
+                                res.render('user', {
+                                    title: req.params.user,
+                                    posts: posts,
+                                    postCount: totalPosts,
+                                    curPage: req.params.page,
+                                    pageCount: Math.ceil(totalPosts / postPerpage),
+                                    follower: (followerlist == undefined) ? 0 : followerlist.length,
+                                    following: (followinglist == undefined) ? 0 : followinglist.length,
+                                    followTag: (index == -1) ? 'Follow' : 'UnFollow'
+                                });
+                            }
+                        })
+
+                        
                     });
                     
                 });

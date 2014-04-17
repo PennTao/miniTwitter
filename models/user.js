@@ -109,7 +109,7 @@ User.unfollow = function unfollow(username, unfollower, callback) {
     })
 }
 
-User.getFolloweInfo = function getFollowerCount(username, callback) {
+User.getFollowInfo = function getFollowInfo(username, callback) {
     mongodb.open(function (err, db) {
         if (err) {
             return callback(err);
@@ -124,13 +124,13 @@ User.getFolloweInfo = function getFollowerCount(username, callback) {
                 query.name = username;
             }
             collection.findOne(query, function (err, doc) {
-                console.log(doc);
                 mongodb.close();
 
                 if (err) {
                     callback(err, null, null);
                 }
-                if (doc.followers == undefined && doc.following == undefined) {
+                callback(null, doc.followers, doc.following);
+           /*     if (doc.followers == undefined && doc.following == undefined) {
                     callback(null, 0, 0);
                 } else if (doc.followers == undefined) {
                     callback(null, 0, doc.following.length);
@@ -139,11 +139,37 @@ User.getFolloweInfo = function getFollowerCount(username, callback) {
                 } else {
                     callback(null, doc.followers.length, doc.following.length);
 
-                }
+                }*/
                 
             });
 
         })
     });
+}
+
+User.checkFollow = function checkFollow(loggedinUser, checkUser, callback) {
+    mongodb.open(function(err,db){
+        if (err) {
+            return callback(err);
+        }
+        db.collection('users', function (err, collection) {
+            if (err) {
+                mongodb.close();
+                return callback(err);
+            }
+            var query = {};
+            if (loggedinUser) {
+                query.name = loggedinUser;
+            }
+            collection.findOne(query, function (err, doc) {
+                mongodb.close();
+                if (err) {
+                    callback(err, null);
+                }
+                callback(null, doc.following.indexOf(checkUser));
+            })
+        
+        }) 
+    })
 
 }

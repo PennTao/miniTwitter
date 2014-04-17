@@ -68,7 +68,7 @@ Post.get = function get(username, callback) {
     });
 };
 
-Post.getPage = function getPage(username, curPage, postPerPage, callback) {
+Post.getPostPerPage = function getPostPerPage(username, curPage, postPerPage, callback) {
     mongodb.open(function (err, db) {
         if (err) {
             return callback(err)
@@ -79,8 +79,11 @@ Post.getPage = function getPage(username, curPage, postPerPage, callback) {
                 return callback(err);
             }
             var query = {};
-            if (username) {
+
+            if (typeof (username) == 'string') {
                 query.user = username;
+            } else {
+                query = { user: { $in: username } };
             }
             collection.find(query).sort({ time: -1 }).skip((curPage-1)*postPerPage).limit(postPerPage).toArray(function (err, docs) {
                 mongodb.close();
@@ -108,8 +111,11 @@ Post.getCount = function getCount(username, callback) {
                 return callback(err);
             }
             var query = {};
-            if (username) {
+
+            if (typeof (username) == 'string') {
                 query.user = username;
+            } else {
+                query = { user: { $in: username } };
             }
             collection.find(query).count(function (err, numDocs) {
                 mongodb.close();

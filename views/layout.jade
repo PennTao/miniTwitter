@@ -18,8 +18,9 @@ html
 					a(class='navbar-brand', href='/') miniTwitter
 				div(class='navbar-collapse collapse')
 					ul(class='nav navbar-nav')
-						li
-							a(href='/') Main Page
+						if(user)
+							li
+								a(href='/u/' +  user.name + '/1') Main Page
 						if !user
 							li
 								a(href='/login') Log In

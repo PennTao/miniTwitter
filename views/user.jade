@@ -10,21 +10,24 @@ block content
 									div(class='col-sm-offset-1 col-md-10')
 										a(class= 'thumbnail', href='#')
 											img(class= 'media-object', src='http://en.opensuse.org/images/0/0b/Icon-user.png')
-										h2(class='media-heading') #{title}											
+										div(class="col-md-6  col-sm-6 col-sm-offset-1")
+											h2(class='media-heading') #{title}	
+										
+											if(followTag)
+												form(class='form-horizontal',method='post',action='/u/' + title + '/'+followTag,class='form',role='form')
+													button(type='submit', class='btn btn-success')= followTag										
 					ul(class= 'nav nav-pills nav-sidebar')
 						li
 							span(class='label label-success') Followes
-							a(href='#')= follower 
+							a(href='/u/' + title + '/followers')= follower 
 						li
 							span(class='label label-primary') Followings
-							a(href='#')= following
-						li
-							span(class='label label-danger') Tweets
-							a(href='#') #{postCount}
-					form(method='post',action='/u/' + title + '/follow',class='form',role='form')
-						button(type='submit', class='btn btn-success') Follow
-					form(method='post',action='/u/' + title + '/unfollow',class='form',role='form')
-						button(type='submit', class='btn btn-success') Unfollow
+							a(href='/u/' + title + '/following')= following
+						if(currentUser!=1)
+							li
+								span(class='label label-danger') Tweets
+								a(href='/u/' + title +'/page/1') #{postCount}
+					
 
 	
 
@@ -37,26 +40,52 @@ block content
 					
 					div(class='col-sm-offset-8 col-md-offset-3')
 						ul(class='pagination')
-							- if(curPage>1){
-									li
-										a(href='/u/'+ title + '/page/' + (curPage-1)) &laquo;
-							- }
-							li
-								a(href='/u/'+ title + '/page/1') First
-							- for (var i=1;i<=pageCount;i++){
-							-	if(Math.abs(i-curPage)<=2){		
-							-		if(i == curPage){		
-										li(class='active')
-											a(href='/u/'+ title + '/page/'+i)= i
-							-		}else{
+							if(currentUser != 1)
+								- if(curPage>1){
 										li
-											a(href='/u/'+ title + '/page/'+i)= i							
-							-		}
-							-	}
-							-}
-							li
-								a(href='/u/'+ title + '/page/' + pageCount) Last
-							- if(curPage<pageCount){
-									li
-										a(href='/u/'+ title + '/page/' + (parseInt(curPage) + 1)) &raquo;
-							- }
+											a(href='/u/'+ title + '/page/' + (curPage-1)) &laquo;
+								- }
+								li
+									a(href='/u/'+ title + '/page/1') First
+								- for (var i=1;i<=pageCount;i++){
+								-	if(Math.abs(i-curPage)<=2){		
+								-		if(i == curPage){		
+											li(class='active')
+												a(href='/u/'+ title + '/page/'+i)= i
+								-		}else{
+											li
+												a(href='/u/'+ title + '/page/'+i)= i							
+								-		}
+								-	}
+								-}
+								li
+									a(href='/u/'+ title + '/page/' + pageCount) Last
+								- if(curPage<pageCount){
+										li
+											a(href='/u/'+ title + '/page/' + (parseInt(curPage) + 1)) &raquo;
+								- }
+							else
+								- if(curPage>1){
+										li
+											a(href='/u/'+ user.name + '/' + (curPage-1)) &laquo;
+								- }
+								li
+									a(href='/u/'+ title + '/page/1') First
+								- for (var i=1;i<=pageCount;i++){
+								-	if(Math.abs(i-curPage)<=2){		
+								-		if(i == curPage){		
+											li(class='active')
+												a(href='/u/'+ user.name + '/'+i)= i
+								-		}else{
+											li
+												a(href='/u/'+ user.name + '/'+i)= i							
+								-		}
+								-	}
+								-}
+								li
+									a(href='/u/'+ user.name + '/' + pageCount) Last
+								- if(curPage<pageCount){
+										li
+											a(href='/u/'+ user.name + '/' + (parseInt(curPage) + 1)) &raquo;
+								- }
+								

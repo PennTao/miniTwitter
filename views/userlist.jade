@@ -1,0 +1,36 @@
+extends layout
+
+block content
+	div(class= 'container-fluid')
+			div(class= 'row')
+				div(class='col-sm-3 col-md-2 sidebar',id='follow')
+					div(class='nav-sidebar')
+							div(class= 'well well-sm')
+								div(class='media')
+									div(class='col-sm-offset-1 col-md-10')
+										a(class= 'thumbnail', href='#')
+											img(class= 'media-object', src='http://en.opensuse.org/images/0/0b/Icon-user.png')
+										h2(class='media-heading') #{title}	
+										if(followTag)
+											form(method='post',action='/u/' + title + '/'+followTag,class='form',role='form')
+												button(type='submit', class='btn btn-success')= followTag										
+					ul(class= 'nav nav-pills nav-sidebar')
+						li
+							span(class='label label-success') Followes
+							a(href='/u/' + title + '/followers')= followerCount 
+						li
+							span(class='label label-primary') Followings
+							a(href='/u/' + title + '/following')= followingCount
+				div(class= 'col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main')		
+					div(class='row')
+						h2= listname
+						each user,i in userlist
+							div(class='col-6 col-sm-6 col-lg-4')
+								blockquote
+									div(class='media')
+										a(class='pull-left',href='#')
+											img(class= 'media-object', src='http://en.opensuse.org/images/0/0b/Icon-user.png',style='width:64px;height:64px')
+										div(class='media-body')
+											h4(class='media-heading')
+												a(href='/u/'+user+'/page/1')= user
+												

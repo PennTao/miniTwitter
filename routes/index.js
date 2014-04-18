@@ -6,7 +6,7 @@ var crypto = require('crypto');
 var User = require('../models/user.js');
 var Post = require('../models/post.js');
 var Delete = require('../models/delete.js');
-var postPerpage = 5;
+var postPerpage = 6;
 module.exports = function (app) {
     app.get('/', function (req, res) {
         Post.get(null, function (err, posts) {

@@ -1,7 +1,7 @@
 //public/javascripts/global.js
 
 $(document).ready(function(){
-    $('#post blockquote small').on('click', 'a.deletepost', deletePost);
+    $('#post small').on('click', 'a.deletepost', deletePost);
     $('#follow').on('click', 'a.follow', follow);
     $('#follow').on('click', 'a.unfollow', unfollow);
 });
